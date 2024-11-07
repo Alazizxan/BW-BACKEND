@@ -57,3 +57,9 @@ model Wallet {
 
   @@map("wallet")
 }
+
+model Countdown {
+  id     Int      @id @default(autoincrement())
+  date   DateTime
+  status Boolean
+}
