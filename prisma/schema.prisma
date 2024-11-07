@@ -15,6 +15,7 @@ model User {
   referall     String?
 
   taskList UserTask[]
+  wallet   Wallet?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -45,4 +46,14 @@ model UserTask {
 
   @@unique([userId, taskId])
   @@map("user_tasks")
+}
+
+model Wallet {
+  id            Int    @id @default(autoincrement())
+  walletAddress String
+  userId        Int    @unique
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("wallet")
 }
