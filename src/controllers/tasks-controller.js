@@ -4,12 +4,13 @@ const ApiError = require('../errors/api-erros')
 class TasksController {
     async create(req, res, next) {
         try {
-            const {title, description, cost} = req.body;
+            const {title, description, cost, link} = req.body;
 
             const task = await prisma.task.create({
                 data: {
                     title: title,
                     description: description,
+                    link: link,
                     cost: cost
                 }
             })
@@ -64,7 +65,8 @@ class TasksController {
             const user = await prisma.user.findFirst({where: {telegramId: telegramId.toString()} });
 
             if (!task || !user) throw ApiError.BadRequest('Task not found')
-
+            
+            await prisma.user.update({where: { id: user.id }, data: { balance: user.balance+task.cost }})
             const passedTask = await prisma.userTask.create({ data: { taskId: taskId, userId: user.id } })
 
             return res.json({ message: "Task passed", data: passedTask });

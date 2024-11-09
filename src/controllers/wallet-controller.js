@@ -1,16 +1,34 @@
 const prisma = require('../utils/prisma');
-const ApiError = require('../errors/api-erros')
+const ApiError = require('../errors/api-erros');
 
 class WalletController {
     async createWallet(req, res, next) {
         try {
-            const {telegramId, walletAddress} = req.body;
+            const {userId, walletAddress} = req.body;            
+    
+            const wallet = await prisma.wallet.create({ data: { walletAddress: walletAddress, userId: userId } });
+            return res.json({ message: "Wallet created", data: wallet });
+        } catch (error) {
+            next(error);
+        }
+    }
+    
 
-            const user = await prisma.user.findFirst({ where: { telegramId: telegramId.toString() }});
-            if (!user) throw ApiError.BadRequest("User not found")
+    async deleteWallet(req, res, next) {
+        try {
+            const { id } = req.params
 
-            const wallet = await prisma.wallet.create({ data: { walletAddress: walletAddress, userId: user.id } })
-            return res.json({ message: "Wallet created", data: wallet })
+            const wallet = await prisma.wallet.deleteMany({ where: { userId: Number(id) }});
+            return res.json({ message: "Wallet deleted", data: wallet })
+        } catch (error) {
+            next(error)
+        }
+    }
+
+
+    async widthdrawral(req, res, next) {
+        try {
+            
         } catch (error) {
             next(error)
         }
@@ -18,10 +36,7 @@ class WalletController {
 
     async getWallet(req, res, next) {
         try {
-            const user = await prisma.user.findFirst({ where: { telegramId: req.params.id.toString() }});
-            if (!user) return res.json({message: "Wallet not found", data: false})
-
-            const wallet = await prisma.wallet.findFirst({where:  { userId: user.id }});
+            const wallet = await prisma.wallet.findFirst({where:  { userId: Number(req.params.id) }});
             if (!wallet) return res.json({message: "Wallet not found", data: false})
 
             return res.json({ message: "Wallet created", data: wallet })

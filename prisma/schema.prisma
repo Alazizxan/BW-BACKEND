@@ -16,7 +16,7 @@ model User {
   balance      Int     @default(0)
 
   taskList UserTask[]
-  wallet   Wallet?
+  wallet   Wallet[]
 
   date      String
   time      String
@@ -31,6 +31,7 @@ model Task {
   title       String
   description String?
   cost        Int
+  link        String
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   userTasks   UserTask[]
@@ -54,7 +55,7 @@ model UserTask {
 model Wallet {
   id            Int    @id @default(autoincrement())
   walletAddress String
-  userId        Int    @unique
+  userId        Int    
 
   user User @relation(fields: [userId], references: [id])
 
