@@ -11,7 +11,7 @@ class CountdownController {
               return res.status(404).json({ error: 'No countdown found' });
             }
 
-            res.json({ message: "Countdown end date", data: countdown.date });
+            res.json({ message: "Countdown end date", data: countdown });
         } catch (error) {
             next(error);
         }
@@ -32,18 +32,30 @@ class CountdownController {
     async updateCountdown(req, res, next) {
         try {
             const { date, status } = req.body;
+            const countdown = await prisma.countdown.findFirst()
+
 
             if (!date) {
-              return res.status(400).json({ error: 'Date is required' });
+                const updatedCountdown = await prisma.countdown.update({
+                    where: {
+                        id: countdown.id
+                    },
+                    data: {
+                        status: status
+                    }
+                })
+    
+                return res.json({ message: "Countdown end date updated", data: updatedCountdown });            
             }
 
             const newDate = new Date(date);
+
+
 
             if (isNaN(newDate.getTime())) {
               return res.json({ error: 'Invalid date format' });
             }
 
-            const countdown = await prisma.countdown.findFirst()
 
             const updatedCountdown = await prisma.countdown.update({
                 where: {
@@ -55,7 +67,7 @@ class CountdownController {
                 }
             })
 
-            res.json({ message: "Countdown end date updated", data: updatedCountdown });
+            return res.json({ message: "Countdown end date updated", data: updatedCountdown });
         } catch (error) {
             next(error);
         }

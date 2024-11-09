@@ -13,6 +13,7 @@ model User {
   telegramId   String  @unique
   profileImage String
   referall     String?
+  balance      Int     @default(0)
 
   taskList UserTask[]
   wallet   Wallet?
