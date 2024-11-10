@@ -11,12 +11,55 @@ class TasksController {
                     title: title,
                     description: description,
                     link: link,
-                    cost: cost
+                    cost: Number(cost)
                 }
             })
 
 
             return res.json({message: "Task created", data: task});
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async updateTask(req, res, next) {
+        try {
+            const task = await prisma.task.update({ where: { id: Number(req.params.id) }, data: req.body })
+            console.log(task);
+            
+            return res.json({ message: "Task updated", data: task })
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async deleteTask(req, res, next) {
+        try {
+            await prisma.userTask.deleteMany({ where: { taskId: Number(req.params.id) } })
+            await prisma.task.delete({where: { id: Number(req.params.id) }});
+
+            return res.json({ message: "Task deleted", data: true })
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async all(req, res, next) {
+        try {
+            const tasks = await prisma.task.findMany({})
+            
+            return res.json({ message: "All tasks", data: tasks })
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async task(req, res, next) {
+        try {
+            const task = await prisma.task.findFirst({ where: { id: Number(req.params.id )} })
+            if (!task) return res.json({ message: "Task not found", data: [] })
+            
+            return res.json({ message: "Task", data: task })
         } catch (error) {
             next(error)
         }
