@@ -35,6 +35,15 @@ class UsersController {
         }
     }
 
+    async count(req, res, next) {
+        try {
+            const count = await prisma.user.count()
+            return res.json({ message: "Count", data: count });
+        } catch (error) {
+            next(error);
+        }
+    }
+
 
     async friends(req, res, next) {
         try {

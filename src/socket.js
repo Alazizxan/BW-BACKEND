@@ -4,6 +4,9 @@ function initializeSocket(io) {
   io.on('connection', (socket) => {
     getAndEmitCountdown(socket);
 
+    console.log('connected');
+    
+
     socket.on('disconnect', () => {});
   });
 }

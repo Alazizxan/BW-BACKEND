@@ -9,7 +9,7 @@ const mainButtons = Markup.inlineKeyboard([
 
 const adminButtons = Markup.inlineKeyboard([
     [Markup.button.callback('📊 Statistika', 'statistic')],
-    [Markup.button.webApp("⏬ Task qo'shish", process.env.WEPAPP_URL + '/admin')],
+    [Markup.button.webApp("⏬ Admin panel", process.env.WEPAPP_URL + '/admin')],
 ])
 
 const statisticButtons = Markup.inlineKeyboard([

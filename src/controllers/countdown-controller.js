@@ -35,6 +35,9 @@ class CountdownController {
             const countdown = await prisma.countdown.findFirst()
 
 
+            console.log(req.body);
+            
+
             if (!date) {
                 const updatedCountdown = await prisma.countdown.update({
                     where: {
