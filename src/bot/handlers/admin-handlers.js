@@ -2,7 +2,7 @@ const prisma = require('../../utils/prisma');
 const {adminButtons, statisticButtons} = require('../buttons')
 
 const ADMINS = [
-    6219999739
+    6414918275
 ]
 
 const admin = async ctx => {
