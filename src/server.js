@@ -2,11 +2,12 @@ const http = require('http');
 const socket = require('socket.io');
 const app = require('./app');
 const prisma = require('./utils/prisma');
-const bot = require('./bot/index')
+const bot = require('./bot/index');
 
 const { initializeSocket } = require('./socket');
 const { createTriggerFunction, listenToNotifications } = require('./utils/trigger');
 
+// Create the server
 const server = http.createServer(app);
 const io = new socket.Server(server, {
   cors: {
@@ -17,25 +18,50 @@ const io = new socket.Server(server, {
 
 // Start the server
 async function startServer() {
-  await prisma.$connect();
-  await createTriggerFunction();
-  await listenToNotifications(io);
+  try {
+    // Connect to Prisma
+    await prisma.$connect();
+    console.log('> Connected to the database');
 
-  initializeSocket(io);
+    // Set up database triggers and listen for notifications
+    await createTriggerFunction();
+    await listenToNotifications(io);
 
-  bot.launch()
-  console.log("> Telegram bot started")
-  server.listen(process.env.PORT, () => console.log(`> Listening on port ${process.env.PORT}`));
+    // Initialize socket.io
+    initializeSocket(io);
+
+    // Start the Telegram bot
+    bot.launch();
+    console.log("> Telegram bot started");
+
+    // Listen on the specified port, binding to 0.0.0.0 to accept inbound requests
+    const port = process.env.PORT || 3000; // Use environment variable or default to 3000
+    server.listen(port, '0.0.0.0', () => {
+      console.log(`> Listening on port ${port}`);
+    });
+  } catch (error) {
+    console.error('Error during server startup:', error);
+    process.exit(1);
+  }
 }
 
+// Handle graceful shutdown
 process.on('SIGINT', async () => {
-  await prisma.$disconnect();
-  process.exit(0);
-
+  try {
+    await prisma.$disconnect();
+    console.log('> Disconnected from database');
+    process.exit(0);
+  } catch (error) {
+    console.error('Error during shutdown:', error);
+    process.exit(1);
+  }
 });
 
+// Handle unhandled promise rejections
 process.on('unhandledRejection', (error) => {
   console.error('Unhandled rejection:', error);
+  process.exit(1);
 });
 
+// Start the server
 startServer();
