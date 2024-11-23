@@ -14,6 +14,7 @@ model User {
   profileImage String  @default("AgACAgIAAxUAAWcvVZPNsdsHnU9o-LePuIBV_0HBAAJh5DEbW0CBSYh4-onU_JhlAQADAgADYQADNgQ")
   referall     String?
   balance      Int     @default(0)
+  referralCount Int      @default(0)
 
   taskList UserTask[]
   wallet   Wallet[]

@@ -117,6 +117,37 @@ class TasksController {
             next(error)
         }
     }
+
+
+
+    // Yangi metod - top referrallarni olish
+    async getTopReferrals(req, res, next) {
+        try {
+            const topReferrals = await prisma.user.findMany({
+                select: {
+                    firstName: true,
+                    telegramId: true,
+                    balance: true,
+                    referralCount: true,
+                    date: true,
+                    time: true
+                },
+                orderBy: {
+                    referralCount: 'desc'
+                },
+                take: 10
+            });
+
+            return res.json({ 
+                message: "Top referrals", 
+                data: topReferrals 
+            });
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    //
 }
 
 module.exports = new TasksController()
