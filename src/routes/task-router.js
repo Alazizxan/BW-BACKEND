@@ -7,7 +7,6 @@ const {
     updateTask, 
     deleteTask, 
     task,
-    getTopReferrals // Yangi controller
 } = require('../controllers/tasks-controller');
 
 const taskRouter = Router();
@@ -19,6 +18,6 @@ taskRouter.post('/pass', passTask);
 taskRouter.get('/all/:telegramId', tasks);
 taskRouter.get('/all', all);
 taskRouter.get('/get/:id', task);
-taskRouter.get('/topreferrals', getTopReferrals); // Yangi route
+ // Yangi route
 
 module.exports = taskRouter;

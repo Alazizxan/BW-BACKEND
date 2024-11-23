@@ -2,14 +2,16 @@ const prisma = require('../../utils/prisma');
 const {adminButtons, statisticButtons} = require('../buttons')
 
 const ADMINS = [
-    6414918275
-]
+    '6414918275'  // ID larni string formatida saqlash
+];
 
+// Adminni tekshirish funksiyasi
 const admin = async ctx => {
-    if (ADMINS.includes(ctx.from.id)) {
-        return ctx.reply('👤 ADMIN xush kelibsiz', adminButtons)
+    // Foydalanuvchi ID sini string formatiga o'zgartirib tekshirish
+    if (ADMINS.includes(ctx.from.id.toString())) {
+        return ctx.reply('👤 ADMIN xush kelibsiz', adminButtons);
     }
-}
+};
 
 const back = async ctx => {
      if (ctx.callbackQuery) {

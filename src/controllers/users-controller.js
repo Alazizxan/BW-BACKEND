@@ -12,7 +12,7 @@ class UsersController {
                 if (referall) {
                     const reffer = await prisma.user.findFirst({ where: { telegramId: referall.toString() } })
                     if (reffer) {
-                        await prisma.user.update({ where: { telegramId: referall }, data: { balance: reffer.balance + 100 } })
+                        await prisma.user.update({ where: { telegramId: referall }, data: { balance: reffer.balance + 100, referralCount: reffer.referralCount + 1 } })
                     }
                 }
 
