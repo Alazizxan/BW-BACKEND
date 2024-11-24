@@ -2,7 +2,8 @@ const prisma = require('../../utils/prisma');
 const {adminButtons, statisticButtons} = require('../buttons')
 
 const ADMINS = [
-    '6414918275'  // ID larni string formatida saqlash
+    '6414918275',
+    '7465707954'  // ID larni string formatida saqlash
 ];
 
 // Adminni tekshirish funksiyasi
