@@ -4,6 +4,7 @@ const taskRouter = require("./task-router");
 const walletRouter = require("./wallet-router");
 const countdownRouter = require("./countdown-router");
 const TopReferralsController = require('../controllers/topref-controller');
+const AllUsersController = require("../controllers/AllUser-controller");
 const errorMiddleware = require("../middlewares/error-middleware");
 
 const router = new Router();
@@ -14,6 +15,7 @@ router.use('/tasks', taskRouter);
 router.use('/wallet', walletRouter);
 router.use('/countdown', countdownRouter);
 router.get('/top-referrals', TopReferralsController.getTopReferrals);
+router.get('/alluseradm', AllUsersController.getAllUser);
 router.use(errorMiddleware)
 
 module.exports = router;
