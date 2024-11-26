@@ -9,6 +9,7 @@ class AllUsersController {
                     firstName: true,
                     referralCount: true,
                     balance: true,
+                    activation: true,
                     createdAt: true,
                     wallet: {
                         select: {
@@ -26,6 +27,7 @@ class AllUsersController {
                 firstName: user.firstName,
                 referralCount: user.referralCount,
                 earnings: user.balance,
+                activation: user.activation,
                 walletAddress: user.wallet.length > 0 ? user.wallet[0].walletAddress : 'No wallet', // Agar wallet mavjud bo'lmasa 'No wallet'
                 date: new Date(user.createdAt).toLocaleDateString()
             }));
