@@ -7,6 +7,7 @@ class AllUsersController {
             const topUsers = await prisma.user.findMany({
                 select: {
                     firstName: true,
+                    telegramId: true,
                     referralCount: true,
                     balance: true,
                     activation: true,
@@ -27,6 +28,7 @@ class AllUsersController {
                 firstName: user.firstName,
                 referralCount: user.referralCount,
                 earnings: user.balance,
+                telegramId: user.telegramId,
                 activation: user.activation,
                 walletAddress: user.wallet.length > 0 ? user.wallet[0].walletAddress : 'No wallet', // Agar wallet mavjud bo'lmasa 'No wallet'
                 date: new Date(user.createdAt).toLocaleDateString()

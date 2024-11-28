@@ -30,6 +30,32 @@ class UserDetailsController {
             next(error);
         }
     }
+
+    // Yangi metod: Userni activesini true qilish
+    async activateUser(req, res, next) {
+        try {
+            const { telegramId } = req.params;
+
+            // Userni activesini true qilish
+            const updatedUser = await prisma.user.update({
+                where: { telegramId: telegramId.toString() },
+                data: { activation: true },
+            });
+
+            if (!updatedUser) {
+                return res.status(404).json({ message: "User not found" });
+            }
+
+            return res.json({
+                message: "User activated successfully",
+                data: {
+                    activation: updatedUser.activation,
+                },
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
 }
 
 module.exports = new UserDetailsController();
