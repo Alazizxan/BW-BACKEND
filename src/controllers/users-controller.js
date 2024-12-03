@@ -5,6 +5,13 @@ class UsersController {
     async register(req, res, next) {
         try {
             const { firstName, profileImage, telegramId, referall } = req.body;
+
+            // Agar profileImage bo'sh yoki xato bo'lsa, standart rasmni o'rnatamiz
+            let userProfileImage = profileImage;
+            if (!userProfileImage) {
+                userProfileImage = 'https://avatars.mds.yandex.net/i?id=478675588c3c3bf2bae3ddc611a9dd0f3ded42d7-9765845-images-thumbs&n=13'; // Bu yerga o'zingizning standart rasm URL manzilingizni qo'ying
+            }
+
             const candidate = await prisma.user.findFirst({ where: { telegramId: telegramId.toString() } });
 
             if (candidate) return res.json({ message: "This user already exists", data: candidate });
@@ -19,7 +26,7 @@ class UsersController {
                 const user = await prisma.user.create({
                     data: {
                         firstName: firstName,
-                        profileImage: profileImage,
+                        profileImage: userProfileImage,  // Profil rasmni shu yerda saqlaymiz
                         telegramId: telegramId.toString(),
                         referall: referall.toString(),
                         date: time(new Date().toString()).formattedDate,
@@ -44,7 +51,6 @@ class UsersController {
         }
     }
 
-
     async friends(req, res, next) {
         try {
             const friends = await prisma.user.findMany({ where: { referall: req.params.id.toString() } })
@@ -54,6 +60,5 @@ class UsersController {
         }
     }
 }
-
 
 module.exports = new UsersController();

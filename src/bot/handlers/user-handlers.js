@@ -1,4 +1,3 @@
-
 const prisma = require('../../utils/prisma');
 const time = require('../../utils/time');
 const { mainButtons } = require('../buttons');
@@ -32,14 +31,16 @@ const start = async ctx => {
             });
         }
 
-        let profileImage = null;
+        let profileImage = 'no picture';  // Standart rasm URL sini belgilang
         try {
             const rasmlar = await ctx.telegram.getUserProfilePhotos(ctx.from.id);
             if (rasmlar && rasmlar.photos && rasmlar.photos[0] && rasmlar.photos[0][0]) {
-                profileImage = rasmlar.photos[0][0].file_id;
+                profileImage = rasmlar.photos[0][0].file_id; // Agar rasm bo'lsa, uni o'rnatamiz
             }
         } catch (photoError) {
             console.error('Profil rasmini olishda xato:', photoError);
+            // Agar rasm olishda xato bo'lsa, 'no picture' deb belgilaymiz
+            profileImage = 'no picture';
         }
 
         const yangiFoydalanuvchi = await prisma.user.create({
