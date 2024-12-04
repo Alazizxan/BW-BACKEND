@@ -72,7 +72,7 @@ async function pollTasks() {
   } catch (error) {
     console.error('Error polling tasks:', error);
   } finally {
-    setTimeout(pollTasks, 10000); // 10 soniyadan so'ng qayta ishlatish
+    setTimeout(pollTasks, 40000); // 10 soniyadan so'ng qayta ishlatish
   }
 }
 
