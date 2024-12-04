@@ -19,7 +19,7 @@ const start = async ctx => {
 
         if (mavjudFoydalanuvchi) {
             return await ctx.replyWithHTML(
-                `Salom! 🚀 <b>Black Wallet</b>ga xush kelibsiz – kripto savdoning eng qulay platformasi! 📲 Eng so'nggi manbalarda sizning imkoniyatlaringiz cheksiz!\n\nYangi yangilik! Telegram mini-ilova 🌐 orqali bugun punktlar yig'a boshlang! 🌠\n\nDo'stlaringizni taklif qiling – ko'proq do'stlar, ko'proq imkoniyatlar! 🌱\n\n<b>Black Wallet</b>da o'sish va rivojlanish davom etadi! 💸`,
+                `Salom! 🚀 <b>Black Well</b>ga xush kelibsiz – kripto savdoning eng qulay platformasi! 📲 Eng so'nggi manbalarda sizning imkoniyatlaringiz cheksiz!\n\nYangi yangilik! Telegram mini-ilova 🌐 orqali bugun punktlar yig'a boshlang! 🌠\n\nDo'stlaringizni taklif qiling – ko'proq do'stlar, ko'proq imkoniyatlar! 🌱\n\n<b>Black Wallet</b>da o'sish va rivojlanish davom etadi! 💸`,
                 mainButtons
             );
         }

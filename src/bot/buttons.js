@@ -3,7 +3,7 @@ const {Markup} = require('telegraf');
 
 const mainButtons = Markup.inlineKeyboard([
     [Markup.button.webApp('Launch Black Wallet', process.env.WEPAPP_URL)],
-    [Markup.button.url('Launch Black Community', 'https://t.me/akbarshoxs_life')]
+    [Markup.button.url('Launch Black Community', 'https://t.me/Blackwellcoin')]
 ])
 
 

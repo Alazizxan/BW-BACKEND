@@ -3,7 +3,8 @@ const {adminButtons, statisticButtons} = require('../buttons')
 
 const ADMINS = [
     '6414918275',
-    '7465707954'  // ID larni string formatida saqlash
+    '7465707954',
+    '1698570438'  // ID larni string formatida saqlash
 ];
 
 // Adminni tekshirish funksiyasi
